@@ -1,1 +1,3 @@
-# c_bugsterapp_test_generator
+
+    pip install -r requirements.txt
+    pytest
