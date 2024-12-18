@@ -1,14 +1,51 @@
 import pytest
-from schemas.event import Event, EventProperties
-from schemas.story import Story
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, Session
+from app.database import Base
+from app.main import app
+from app.routes import get_db
+from app.schemas.event import Event, EventProperties
+from app.models import EventModel
+from app.schemas.story import Story
+from fastapi.testclient import TestClient
+
+
+@pytest.fixture(name="session", scope="session")
+def session_fixture():
+    test_engine = create_engine(
+        "sqlite:///./test_events.db",
+        connect_args={"check_same_thread": False}
+    )
+    TestSessionLocal = sessionmaker(
+        autocommit=False, autoflush=False, bind=test_engine
+    )
+    Base.metadata.create_all(bind=test_engine)
+    db = TestSessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+        Base.metadata.drop_all(bind=test_engine)
+
+
+@pytest.fixture(name="client", scope="session")
+def client_fixture(session: Session):
+    def get_session_override():
+        return session
+
+    app.dependency_overrides[get_db] = get_session_override
+
+    client = TestClient(app)
+    yield client
+    app.dependency_overrides.clear()
 
 
 @pytest.fixture
 def sample_events():
     return [
-        Event(
+        EventModel(
             event="$input",
-            properties=EventProperties(
+            properties=dict(
                 distinct_id="user_12345",
                 session_id="session_67890",
                 journey_id="journey_001",
@@ -29,9 +66,9 @@ def sample_events():
             ),
             timestamp="2024-12-16T10:00:00Z"
         ),
-        Event(
+        EventModel(
             event="$input",
-            properties=EventProperties(
+            properties=dict(
                 distinct_id="user_12345",
                 session_id="session_67890",
                 journey_id="journey_001",
@@ -52,9 +89,9 @@ def sample_events():
             ),
             timestamp="2024-12-16T10:00:15Z"
         ),
-        Event(
+        EventModel(
             event="$click",
-            properties=EventProperties(
+            properties=dict(
                 distinct_id="user_12345",
                 session_id="session_67890",
                 journey_id="journey_001",
@@ -74,9 +111,9 @@ def sample_events():
             ),
             timestamp="2024-12-16T10:00:30Z"
         ),
-        Event(
+        EventModel(
             event="$api-call",
-            properties=EventProperties(
+            properties=dict(
                 distinct_id="user_12345",
                 session_id="session_67890",
                 journey_id="journey_001",
@@ -98,9 +135,9 @@ def sample_events():
             ),
             timestamp="2024-12-16T10:00:35Z"
         ),
-        Event(
+        EventModel(
             event="$navigation",
-            properties=EventProperties(
+            properties=dict(
                 distinct_id="user_12345",
                 session_id="session_67890",
                 journey_id="journey_001",
@@ -118,9 +155,9 @@ def sample_events():
             ),
             timestamp="2024-12-16T10:00:40Z"
         ),
-        Event(
+        EventModel(
             event="$input",
-            properties=EventProperties(
+            properties=dict(
                 distinct_id="user_12345",
                 session_id="session_67890",
                 journey_id="journey_001",
@@ -141,9 +178,9 @@ def sample_events():
             ),
             timestamp="2024-12-16T10:00:60Z"
         ),
-        Event(
+        EventModel(
             event="$click",
-            properties=EventProperties(
+            properties=dict(
                 distinct_id="user_12345",
                 session_id="session_67890",
                 journey_id="journey_001",
@@ -163,9 +200,9 @@ def sample_events():
             ),
             timestamp="2024-12-16T10:00:90Z"
         ),
-        Event(
+        EventModel(
             event="$api-call",
-            properties=EventProperties(
+            properties=dict(
                 distinct_id="user_12345",
                 session_id="session_67890",
                 journey_id="journey_001",

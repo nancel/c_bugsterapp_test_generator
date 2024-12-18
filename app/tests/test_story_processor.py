@@ -1,4 +1,4 @@
-from processors.story_processor import StoryProcessor
+from app.processors.story_processor import StoryProcessor
 
 
 def test_process_stories_initialization(sample_story):

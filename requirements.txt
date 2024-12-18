@@ -1,3 +1,9 @@
 pytest
 pydantic
+fastapi
+uvicorn
+sqlalchemy
+aiosqlite
+
 pre-commit
+httpx

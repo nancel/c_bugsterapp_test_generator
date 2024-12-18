@@ -1,5 +1,5 @@
-from schemas.event import Event
-from schemas.story import Story
+from app.schemas.event import Event, EventProperties
+from app.schemas.story import Story
 
 
 def split_stories_actions(events):
@@ -8,7 +8,13 @@ def split_stories_actions(events):
     sequence_events = []
 
     for i, event in enumerate(events):
-        current_story_actions.append(event)
+        current_story_actions.append(
+            Event(
+                event=event.event,
+                timestamp=event.timestamp,
+                properties=EventProperties(**event.properties)
+            )
+        )
         sequence_events.append(event.event)
 
         sequence = ' '.join(sequence_events)

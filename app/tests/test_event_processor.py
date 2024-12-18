@@ -1,4 +1,4 @@
-from processors.event_processor import EventProcessor
+from app.processors.event_processor import EventProcessor
 
 
 def test_process_events_initialization():
