@@ -1,5 +1,5 @@
-from app.schemas.event import Event, EventProperties
-from app.schemas.story import Story
+from app.schemas.event import Event
+from app.schemas.story import Story, Action
 
 
 def split_stories_actions(events):
@@ -8,11 +8,18 @@ def split_stories_actions(events):
     sequence_events = []
 
     for i, event in enumerate(events):
+        element_attributes = event.properties.get('element_attributes')
+        target = ''
+        if element_attributes and 'id' in element_attributes:
+            target = element_attributes['id']
         current_story_actions.append(
-            Event(
-                event=event.event,
-                timestamp=event.timestamp,
-                properties=EventProperties(**event.properties)
+            Action(
+                type=event.event,
+                target=target,
+                value='',
+                url=event.properties['current_url'],
+                pathname=event.properties['pathname'].replace('/', ''),
+                element_text=event.properties['element_text']
             )
         )
         sequence_events.append(event.event)
@@ -36,10 +43,10 @@ def split_stories_actions(events):
 
 def generate_story_name(actions):
     story_name = ''
-    for event in actions:
-        if event.event == '$click':
-            pathname = event.properties.pathname.replace('/', '')
-            element_text = event.properties.element_text
+    for action in actions:
+        if action.type == '$click':
+            pathname = action.pathname
+            element_text = action.element_text
             story_name = f'{pathname} {element_text}'
     return story_name
 

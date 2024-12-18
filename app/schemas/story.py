@@ -1,8 +1,16 @@
 from pydantic import BaseModel
 from typing import List
-from app.schemas.event import Event
+
+
+class Action(BaseModel):
+    type: str
+    target: str = ''
+    value: str = ''
+    url: str = ''
+    pathname: str = ''
+    element_text: str = ''
 
 
 class Story(BaseModel):
     name: str = ''
-    actions: List[Event] = []
+    actions: List[Action] = []

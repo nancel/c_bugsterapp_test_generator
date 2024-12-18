@@ -7,18 +7,18 @@ class StoryProcessor:
         lines = [f"def test_{name}_flow(page):"]
 
         for action in self.story.actions:
-            if action.event == '$input':
-                id = action.properties.element_attributes['id']
+            if action.type == '$input':
+                id = action.target
                 lines.append(
                     f'    page.locator("#{id}").fill("{id}_value")'
                 )
-            if action.event == '$click':
-                id = action.properties.element_attributes['id']
+            if action.type == '$click':
+                id = action.target
                 lines.append(
                     f'    page.locator("#{id}").click()'
                 )
-            if action.event == '$navigation':
-                url = action.properties.current_url
+            if action.type == '$navigation':
+                url = action.url
                 lines.append(
                     f'    expect(page.url()).toBe(\'{url}\')'
                 )

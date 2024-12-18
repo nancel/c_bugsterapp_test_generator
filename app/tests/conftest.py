@@ -4,9 +4,8 @@ from sqlalchemy.orm import sessionmaker, Session
 from app.database import Base
 from app.main import app
 from app.routes import get_db
-from app.schemas.event import Event, EventProperties
 from app.models import EventModel
-from app.schemas.story import Story
+from app.schemas.story import Story, Action
 from fastapi.testclient import TestClient
 
 
@@ -232,117 +231,45 @@ def sample_story():
     return Story(
         name='login Log In',
         actions=[
-            Event(
-                event="$input",
-                properties=EventProperties(
-                    distinct_id="user_12345",
-                    session_id="session_67890",
-                    journey_id="journey_001",
-                    current_url="https://example.com/login",
-                    host="example.com",
-                    pathname="/login",
-                    browser="Chrome",
-                    device="Desktop",
-                    screen_height=1080,
-                    screen_width=1920,
-                    event_type="input",
-                    element_type="input",
-                    element_text="",
-                    element_attributes=dict(
-                        id="email",
-                        type="email"
-                    )
-                ),
-                timestamp="2024-12-16T10:00:00Z"
+            Action(
+                type="$input",
+                target="email",
+                value="",
+                url="https://example.com/login",
+                pathname="login",
+                element_text=""
             ),
-            Event(
-                event="$input",
-                properties=EventProperties(
-                    distinct_id="user_12345",
-                    session_id="session_67890",
-                    journey_id="journey_001",
-                    current_url="https://example.com/login",
-                    host="example.com",
-                    pathname="/login",
-                    browser="Chrome",
-                    device="Desktop",
-                    screen_height=1080,
-                    screen_width=1920,
-                    event_type="input",
-                    element_type="input",
-                    element_text="",
-                    element_attributes=dict(
-                        id="password",
-                        type="password"
-                    )
-                ),
-                timestamp="2024-12-16T10:00:15Z"
+            Action(
+                type="$input",
+                target="password",
+                value="",
+                url="https://example.com/login",
+                pathname="login",
+                element_text=""
             ),
-            Event(
-                event="$click",
-                properties=EventProperties(
-                    distinct_id="user_12345",
-                    session_id="session_67890",
-                    journey_id="journey_001",
-                    current_url="https://example.com/login",
-                    host="example.com",
-                    pathname="/login",
-                    browser="Chrome",
-                    device="Desktop",
-                    screen_height=1080,
-                    screen_width=1920,
-                    event_type="click",
-                    element_type="button",
-                    element_text="Log In",
-                    element_attributes=dict(
-                        id="login-button",
-                    )
-                ),
-                timestamp="2024-12-16T10:00:30Z"
+            Action(
+                type="$click",
+                target="login-button",
+                value="",
+                url="https://example.com/login",
+                pathname="login",
+                element_text="Log In"
             ),
-            Event(
-                event="$api-call",
-                properties=EventProperties(
-                    distinct_id="user_12345",
-                    session_id="session_67890",
-                    journey_id="journey_001",
-                    current_url="https://example.com/login",
-                    host="example.com",
-                    pathname="/login",
-                    browser="Chrome",
-                    device="Desktop",
-                    screen_height=1080,
-                    screen_width=1920,
-                    event_type="",
-                    element_type="",
-                    element_text="",
-                    element_attributes=dict(
-                        api_url="https://api.example.com/login",
-                        method="POST",
-                        status="200",
-                    )
-                ),
-                timestamp="2024-12-16T10:00:35Z"
+            Action(
+                type="$api-call",
+                target="",
+                value="",
+                url="https://example.com/login",
+                pathname="login",
+                element_text=""
             ),
-            Event(
-                event="$navigation",
-                properties=EventProperties(
-                    distinct_id="user_12345",
-                    session_id="session_67890",
-                    journey_id="journey_001",
-                    current_url="https://example.com/profile",
-                    host="example.com",
-                    pathname="/profile",
-                    browser="Chrome",
-                    device="Desktop",
-                    screen_height=1080,
-                    screen_width=1920,
-                    event_type="navigation",
-                    element_type="",
-                    element_text="",
-                    element_attributes=None
-                ),
-                timestamp="2024-12-16T10:00:40Z"
-            ),
+            Action(
+                type="$navigation",
+                target="",
+                value="",
+                url="https://example.com/profile",
+                pathname="profile",
+                element_text=""
+            )
         ]
     )
