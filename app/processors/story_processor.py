@@ -1,26 +1,35 @@
 class StoryProcessor:
-    def __init__(self, story):
-        self.story = story
+    def __init__(self):
+        self.stories = []
 
-    def generate_test(self):
-        name = self.story.name.lower().replace(' ', '_')
-        lines = [f"def test_{name}_flow(page):"]
+    def add_story(self, story):
+        self.stories.append(story)
 
-        for action in self.story.actions:
-            if action.type == '$input':
-                id = action.target
-                lines.append(
-                    f'    page.locator("#{id}").fill("{id}_value")'
-                )
-            if action.type == '$click':
-                id = action.target
-                lines.append(
-                    f'    page.locator("#{id}").click()'
-                )
-            if action.type == '$navigation':
-                url = action.url
-                lines.append(
-                    f'    expect(page.url()).toBe(\'{url}\')'
-                )
+    def generate_tests(self):
+        tests = []
 
-        return "\n".join(lines)
+        for story in self.stories:
+
+            name = story.name.lower().replace(' ', '_')
+            lines = [f"def test_{name}_flow(page):"]
+
+            for action in story.actions:
+                if action.type == '$input':
+                    id = action.target
+                    lines.append(
+                        f'    page.locator("#{id}").fill("{id}_value")'
+                    )
+                if action.type == '$click':
+                    id = action.target
+                    lines.append(
+                        f'    page.locator("#{id}").click()'
+                    )
+                if action.type == '$navigation':
+                    url = action.url
+                    lines.append(
+                        f'    expect(page.url()).toBe(\'{url}\')'
+                    )
+
+            tests.append("\n".join(lines))
+
+        return tests

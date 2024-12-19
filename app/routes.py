@@ -57,6 +57,9 @@ def get_tests_endpoint(
     for event in events:
         event_processor.add_event(event)
     stories = event_processor.generate_stories()
-    story_processor = StoryProcessor(stories[0])
 
-    return {"tests": story_processor.generate_test().strip()}
+    story_processor = StoryProcessor()
+    for story in stories:
+        story_processor.add_story(story)
+
+    return {"tests": story_processor.generate_tests()}
