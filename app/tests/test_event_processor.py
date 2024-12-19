@@ -6,17 +6,17 @@ def test_process_events_initialization():
     assert isinstance(processor, EventProcessor)
 
 
-def test_add_event_to_processor(sample_events):
+def test_add_event_to_processor(sample_db_events):
     processor = EventProcessor()
-    for event in sample_events:
+    for event in sample_db_events:
         processor.add_event(event)
 
-    assert len(processor.events) == len(sample_events)
+    assert len(processor.events) == len(sample_db_events)
 
 
-def test_generate_stories(sample_events):
+def test_generate_stories(sample_db_events):
     processor = EventProcessor()
-    for event in sample_events:
+    for event in sample_db_events:
         processor.add_event(event)
 
     stories = processor.generate_stories()
@@ -24,9 +24,9 @@ def test_generate_stories(sample_events):
     assert len(stories) == 2
 
 
-def test_stories_names(sample_events):
+def test_stories_names(sample_db_events):
     processor = EventProcessor()
-    for event in sample_events:
+    for event in sample_db_events:
         processor.add_event(event)
 
     stories = processor.generate_stories()
