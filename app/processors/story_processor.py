@@ -16,8 +16,9 @@ class StoryProcessor:
             for action in story.actions:
                 if action.type == '$input':
                     id = action.target
+                    value = action.value
                     lines.append(
-                        f'    page.locator("#{id}").fill("{id}_value")'
+                        f'    page.locator("#{id}").fill("{value}")'
                     )
                 if action.type == '$click':
                     id = action.target

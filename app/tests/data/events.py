@@ -16,7 +16,8 @@ def get_events():
                 "element_text": "",
                 "element_attributes": {
                     "id": "email",
-                    "type": "email"
+                    "type": "email",
+                    "value": "user@example.com"
                 }
             },
             "timestamp": "2024-12-16T10:00:00Z"
@@ -37,7 +38,8 @@ def get_events():
                 "element_text": "",
                 "element_attributes": {
                     "id": "password",
-                    "type": "password"
+                    "type": "password",
+                    "value": "**********"
                 }
             },
             "timestamp": "2024-12-16T10:00:10Z"
@@ -118,7 +120,8 @@ def get_events():
                 "element_text": "",
                 "element_attributes": {
                     "id": "display-name",
-                    "type": "text"
+                    "type": "text",
+                    "value": "John Doe"
                 }
             },
             "timestamp": "2024-12-16T10:00:10Z"

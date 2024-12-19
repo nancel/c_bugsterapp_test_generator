@@ -22,13 +22,13 @@ def test_generate_test(sample_stories):
     tests = processor.generate_tests()
 
     expected_0 = """def test_login_log_in_flow(page):
-    page.locator("#email").fill("email_value")
-    page.locator("#password").fill("password_value")
+    page.locator("#email").fill("user@example.com")
+    page.locator("#password").fill("**********")
     page.locator("#login-button").click()
     expect(page.url()).toBe('https://example.com/profile')"""
     assert tests[0].strip() == expected_0.strip()
 
     expected_1 = """def test_profile_save_flow(page):
-    page.locator("#display-name").fill("display-name_value")
+    page.locator("#display-name").fill("John Doe")
     page.locator("#save-profile").click()"""
     assert tests[1].strip() == expected_1.strip()

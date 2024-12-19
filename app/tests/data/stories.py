@@ -9,7 +9,7 @@ def get_stories():
                 Action(
                     type="$input",
                     target="email",
-                    value="",
+                    value="user@example.com",
                     url="https://example.com/login",
                     pathname="login",
                     element_text=""
@@ -17,7 +17,7 @@ def get_stories():
                 Action(
                     type="$input",
                     target="password",
-                    value="",
+                    value="**********",
                     url="https://example.com/login",
                     pathname="login",
                     element_text=""
@@ -54,7 +54,7 @@ def get_stories():
                 Action(
                     type="$input",
                     target="display-name",
-                    value="",
+                    value="John Doe",
                     url="https://example.com/profile",
                     pathname="profile",
                     element_text=""

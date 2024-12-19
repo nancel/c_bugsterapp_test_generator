@@ -29,7 +29,8 @@ def test_get_events(client):
             "element_text": "",
             "element_attributes": {
                 "id": "email",
-                "type": "email"
+                "type": "email",
+                "value": "user@example.com"
             }
         },
         "id": 1
@@ -48,7 +49,7 @@ def test_get_stories(client):
             {
                 "type": "$input",
                 "target": "email",
-                "value": "",
+                "value": "user@example.com",
                 "url": "https://example.com/login",
                 "pathname": "login",
                 "element_text": ""
@@ -56,7 +57,7 @@ def test_get_stories(client):
             {
                 "type": "$input",
                 "target": "password",
-                "value": "",
+                "value": "**********",
                 "url": "https://example.com/login",
                 "pathname": "login",
                 "element_text": ""
@@ -96,7 +97,7 @@ def test_get_tests(client):
     tests = response.json()['tests']
     assert len(tests) == 2
     assert tests[0] == """def test_login_log_in_flow(page):
-    page.locator("#email").fill("email_value")
-    page.locator("#password").fill("password_value")
+    page.locator("#email").fill("user@example.com")
+    page.locator("#password").fill("**********")
     page.locator("#login-button").click()
     expect(page.url()).toBe('https://example.com/profile')"""

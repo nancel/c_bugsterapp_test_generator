@@ -10,13 +10,16 @@ def split_stories_actions(events):
     for i, event in enumerate(events):
         element_attributes = event.properties.get('element_attributes')
         target = ''
+        value = ''
         if element_attributes and 'id' in element_attributes:
             target = element_attributes['id']
+        if element_attributes and 'value' in element_attributes:
+            value = element_attributes['value']
         current_story_actions.append(
             Action(
                 type=event.event,
                 target=target,
-                value='',
+                value=value,
                 url=event.properties['current_url'],
                 pathname=event.properties['pathname'].replace('/', ''),
                 element_text=event.properties['element_text']
