@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker, Session
 from fastapi.testclient import TestClient
 from app.database import Base
 from app.main import app
-from app.routes import get_db
+from app.api.routes import get_db
 from app.tests.data.stories import get_stories
 from app.tests.data.db_events import get_db_events
 from app.tests.data.events import get_events
