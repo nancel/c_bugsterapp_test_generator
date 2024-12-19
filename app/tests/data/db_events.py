@@ -110,8 +110,7 @@ def get_db_events():
                 screen_width=1920,
                 event_type="navigation",
                 element_type="",
-                element_text="",
-                element_attributes=None
+                element_text=""
             ),
             timestamp="2024-12-16T10:00:40Z"
         ),

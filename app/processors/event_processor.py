@@ -2,41 +2,44 @@ from app.schemas.event import Event
 from app.schemas.story import Story, Action
 
 
+def extract_action(event):
+    element_attributes = event.properties.get('element_attributes', {})
+
+    return Action(
+        type=event.event,
+        target=element_attributes.get('id', ''),
+        value=element_attributes.get('value', ''),
+        url=event.properties['current_url'],
+        pathname=event.properties['pathname'].replace('/', ''),
+        element_text=event.properties['element_text']
+    )
+
+
+def should_split_story(sequence, events, index):
+    return (
+        '$click $api-call $navigation' in sequence or
+        (
+            '$click $api-call' in sequence and
+            (
+                index + 1 >= len(events) or
+                events[index + 1].event != '$navigation')
+            )
+    )
+
+
 def split_stories_actions(events):
     stories_actions = []
     current_story_actions = []
     sequence_events = []
 
     for i, event in enumerate(events):
-        element_attributes = event.properties.get('element_attributes')
-        target = ''
-        value = ''
-        if element_attributes and 'id' in element_attributes:
-            target = element_attributes['id']
-        if element_attributes and 'value' in element_attributes:
-            value = element_attributes['value']
         current_story_actions.append(
-            Action(
-                type=event.event,
-                target=target,
-                value=value,
-                url=event.properties['current_url'],
-                pathname=event.properties['pathname'].replace('/', ''),
-                element_text=event.properties['element_text']
-            )
+            extract_action(event)
         )
         sequence_events.append(event.event)
 
         sequence = ' '.join(sequence_events)
-        if (
-            '$click $api-call $navigation' in sequence or
-            (
-                '$click $api-call' in sequence and
-                (
-                    i + 1 >= len(events) or
-                    events[i + 1].event != '$navigation')
-                )
-        ):
+        if should_split_story(sequence, events, i):
             stories_actions.append(current_story_actions)
             current_story_actions = []
             sequence_events = []
