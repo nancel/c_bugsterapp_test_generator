@@ -1,7 +1,7 @@
 from typing import Optional
 from sqlalchemy.orm import Session
 from sqlalchemy import text
-from app.models import EventModel
+from app.repository.models import EventModel
 from app.schemas.event import Event
 
 

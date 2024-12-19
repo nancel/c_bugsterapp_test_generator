@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.crud import create_event, get_events
+from app.repository.crud import create_event, get_events
 from app.processors.event_processor import EventProcessor
 from app.processors.story_processor import StoryProcessor
 

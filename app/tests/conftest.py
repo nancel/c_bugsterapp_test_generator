@@ -2,7 +2,7 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 from fastapi.testclient import TestClient
-from app.database import Base
+from app.repository.database import Base
 from app.main import app
 from app.api.routes import get_db
 from app.tests.data.stories import get_stories

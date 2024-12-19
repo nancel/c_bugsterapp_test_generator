@@ -1,4 +1,4 @@
-from app.models import EventModel
+from app.repository.models import EventModel
 
 
 def get_db_events():
