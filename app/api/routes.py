@@ -5,7 +5,9 @@ from app.api.deps import get_db
 from app.schemas.event import EventInput, Event
 from app.schemas.story import Story
 from app.schemas.test import Test
-from app.services import EventService, StoryService, TestService
+from app.services.event import EventService
+from app.services.story import StoryService
+from app.services.test import TestService
 
 router = APIRouter()
 
