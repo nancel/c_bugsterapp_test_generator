@@ -2,7 +2,7 @@ from typing import Optional, List
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from app.api.deps import get_db
-from app.schemas.event import Event
+from app.schemas.event import EventInput, Event
 from app.schemas.story import Story
 from app.schemas.test import Test
 from app.services import EventService, StoryService, TestService
@@ -12,7 +12,7 @@ router = APIRouter()
 
 @router.post("/api/events", summary="Crear eventos", tags=["Events"])
 def create_events_endpoint(
-    events: List[Event], db: Session = Depends(get_db)
+    events: List[EventInput], db: Session = Depends(get_db)
 ):
     event_service = EventService(db)
     created_events = event_service.create_events(events)
@@ -21,7 +21,10 @@ def create_events_endpoint(
     }
 
 
-@router.get("/api/events", summary="Obtener eventos", tags=["Events"])
+@router.get(
+    "/api/events", summary="Obtener eventos", tags=["Events"],
+    response_model=List[Event]
+)
 def get_events_endpoint(
     session_id: Optional[str] = None, db: Session = Depends(get_db)
 ):

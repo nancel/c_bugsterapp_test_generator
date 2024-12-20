@@ -3,15 +3,15 @@ from app.schemas.story import Story, Action
 
 
 def extract_action(event):
-    element_attributes = event.properties.get('element_attributes', {})
+    element_attributes = event.element_attributes
 
     return Action(
         type=event.event,
         target=element_attributes.get('id', ''),
         value=element_attributes.get('value', ''),
-        url=event.properties['current_url'],
-        pathname=event.properties['pathname'].replace('/', ''),
-        element_text=event.properties['element_text']
+        url=event.current_url,
+        pathname=event.pathname.replace('/', ''),
+        element_text=event.element_text
     )
 
 

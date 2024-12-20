@@ -15,23 +15,21 @@ def test_get_events(client):
     assert events[0] == {
         "event": "$input",
         "timestamp": "2024-12-16T10:00:00Z",
-        "properties": {
-            "distinct_id": "user_12345",
-            "session_id": "session_67890",
-            "journey_id": "journey_001",
-            "current_url": "https://example.com/login",
-            "host": "example.com",
-            "pathname": "/login",
-            "browser": "Chrome",
-            "device": "Desktop",
-            "event_type": "input",
-            "element_type": "input",
-            "element_text": "",
-            "element_attributes": {
-                "id": "email",
-                "type": "email",
-                "value": "user@example.com"
-            }
+        "distinct_id": "user_12345",
+        "session_id": "session_67890",
+        "journey_id": "journey_001",
+        "current_url": "https://example.com/login",
+        "host": "example.com",
+        "pathname": "/login",
+        "browser": "Chrome",
+        "device": "Desktop",
+        "event_type": "input",
+        "element_type": "input",
+        "element_text": "",
+        "element_attributes": {
+            "id": "email",
+            "type": "email",
+            "value": "user@example.com"
         },
         "id": 1
     }
