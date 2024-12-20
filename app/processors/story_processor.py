@@ -38,10 +38,11 @@ class StoryProcessor:
                     )
                 ):
                     lines.append(
-                        '    message = page.locator(".success-message")'
+                        '    success_message = '
+                        'page.locator(".success-message")'
                     )
                     lines.append(
-                        '    expect(message).to_be_visible()'
+                        '    expect(success_message).to_be_visible()'
                     )
 
             tests.append("\n".join(lines))
