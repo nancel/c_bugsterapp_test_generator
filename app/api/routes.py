@@ -8,14 +8,24 @@ from app.schemas.test import Test
 from app.services.event import EventService
 from app.services.story import StoryService
 from app.services.test import TestService
+from app.tasks.events import process_event
 
 router = APIRouter()
 
 
 @router.post("/api/events", summary="Crear eventos", tags=["Events"])
 def create_events_endpoint(
-    events: List[EventInput], db: Session = Depends(get_db)
+    events: List[EventInput],
+    use_task_queue: bool = False,
+    db: Session = Depends(get_db)
 ):
+    if use_task_queue:
+        process_event(events)
+
+        return {
+            'message': f'se procesaron {len(events)} eventos correctamente'
+        }
+
     event_service = EventService(db)
     created_events = event_service.create_events(events)
     return {
