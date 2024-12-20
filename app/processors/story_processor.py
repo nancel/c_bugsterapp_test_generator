@@ -13,7 +13,7 @@ class StoryProcessor:
             name = story.name.lower().replace(' ', '_')
             lines = [f"def test_{name}_flow(page):"]
 
-            for action in story.actions:
+            for i, action in enumerate(story.actions):
                 if action.type == '$input':
                     id = action.target
                     value = action.value
@@ -29,6 +29,19 @@ class StoryProcessor:
                     url = action.url
                     lines.append(
                         f'    expect(page.url()).toBe(\'{url}\')'
+                    )
+                if (
+                    action.type == '$api-call' and
+                    (
+                        i + 1 >= len(story.actions) or
+                        story.actions[i + 1].type != '$navigation'
+                    )
+                ):
+                    lines.append(
+                        '    message = page.locator(".success-message")'
+                    )
+                    lines.append(
+                        '    expect(message).to_be_visible()'
                     )
 
             tests.append("\n".join(lines))
