@@ -1,3 +1,6 @@
+from app.schemas.test import Test
+
+
 class StoryProcessor:
     def __init__(self):
         self.stories = []
@@ -45,6 +48,6 @@ class StoryProcessor:
                         '    expect(success_message).to_be_visible()'
                     )
 
-            tests.append("\n".join(lines))
+            tests.append(Test(code="\n".join(lines)))
 
         return tests

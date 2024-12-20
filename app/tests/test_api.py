@@ -41,7 +41,7 @@ def test_get_stories(client):
     response = client.get("/api/stories")
 
     assert response.status_code == 200
-    stories = response.json()['stories']
+    stories = response.json()
     assert len(stories) == 2
     assert stories[0] == {
         "name": "login Log In",
@@ -94,9 +94,9 @@ def test_get_tests(client):
     response = client.get("/api/tests")
 
     assert response.status_code == 200
-    tests = response.json()['tests']
+    tests = response.json()
     assert len(tests) == 2
-    assert tests[0] == """def test_login_log_in_flow(page):
+    assert tests[0]['code'] == """def test_login_log_in_flow(page):
     page.locator("#email").fill("user@example.com")
     page.locator("#password").fill("**********")
     page.locator("#login-button").click()

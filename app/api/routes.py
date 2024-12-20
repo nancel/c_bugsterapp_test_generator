@@ -3,6 +3,8 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from app.api.deps import get_db
 from app.schemas.event import Event
+from app.schemas.story import Story
+from app.schemas.test import Test
 from app.services import EventService, StoryService, TestService
 
 router = APIRouter()
@@ -27,19 +29,25 @@ def get_events_endpoint(
     return event_service.get_events(session_id)
 
 
-@router.get("/api/stories", summary="Obtener stories", tags=["Stories"])
+@router.get(
+    "/api/stories", summary="Obtener stories", tags=["Stories"],
+    response_model=List[Story]
+)
 def get_stories_endpoint(
     session_id: Optional[str] = None, db: Session = Depends(get_db)
 ):
     story_service = StoryService(db)
     stories = story_service.get_stories(session_id)
-    return {"stories": stories}
+    return stories
 
 
-@router.get("/api/tests", summary="Obtener tests", tags=["Tests"])
+@router.get(
+    "/api/tests", summary="Obtener tests", tags=["Tests"],
+    response_model=List[Test]
+)
 def get_tests_endpoint(
     session_id: Optional[str] = None, db: Session = Depends(get_db)
 ):
     test_service = TestService(db)
     tests = test_service.get_tests(session_id)
-    return {"tests": tests}
+    return tests

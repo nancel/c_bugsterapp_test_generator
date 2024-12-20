@@ -26,11 +26,11 @@ def test_generate_test(sample_stories):
     page.locator("#password").fill("**********")
     page.locator("#login-button").click()
     expect(page.url()).toBe('https://example.com/profile')"""
-    assert tests[0].strip() == expected_0.strip()
+    assert tests[0].code == expected_0.strip()
 
     expected_1 = """def test_profile_save_flow(page):
     page.locator("#display-name").fill("John Doe")
     page.locator("#save-profile").click()
     success_message = page.locator(".success-message")
     expect(success_message).to_be_visible()"""
-    assert tests[1].strip() == expected_1.strip()
+    assert tests[1].code == expected_1.strip()
